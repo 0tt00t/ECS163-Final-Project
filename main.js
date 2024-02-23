@@ -2,18 +2,24 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('Spotify_Youtube.csv')
         .then(response => response.text())
         .then(csvString => {
-            // Convert CSV string to array of objects
             var data = Papa.parse(csvString, {
                 header: true,
                 skipEmptyLines: true,
                 dynamicTyping: true,
                 complete: function(results) {
-                    var tracks = results.data.map(row => ({
-                        name: row.Track,
-                        stream: row.Stream,
-                        views: row.Views
-                    }));
+                    var tracks = results.data
+                        .sort((a, b) => b.Stream - a.Stream) // Sort by Stream in descending order
+                        .slice(0, 2000) // Adjust as needed
+                        .map(row => ({
+                            name: row.Track,
+                            stream: row.Stream,
+                            views: row.Views,
+                            danceability: row.Danceability,
+                            energy: row.Energy,
+                            valence: row.Valence
+                        }));
 
+                    // First plot: Comparison Between Spotify Streams and YouTube Views
                     var plotData = {
                         x: tracks.map(t => t.stream),
                         y: tracks.map(t => t.views),
@@ -25,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         type: 'scatter'
                     };
-
                     var layout = {
                         title: 'Comparison Between Spotify Streams and YouTube Views',
                         xaxis: {
@@ -42,43 +47,53 @@ document.addEventListener('DOMContentLoaded', function() {
                         width: 1900, // Adjust the width as needed
                         height: 1000 // Adjust the height as needed
                     };
-
                     Plotly.newPlot('plot', [plotData], layout);
+
+                    var officialVideos = tracks.filter(track => track.official_video);
+                    var nonOfficialVideos = tracks.filter(track => !track.official_video);
+
+                    // Calculate and plot
+                    plotOfficialVideoImpact(officialVideos, nonOfficialVideos);
                 }
             });
         });
-
-    // Function to generate radar chart for a track
-    function generateRadarChart(trackData, divId) {
-        var trace = {
-            type: 'scatterpolar',
-            r: [trackData.danceability, trackData.energy, trackData.valence, trackData.danceability],
-            theta: ['Danceability', 'Energy', 'Valence', 'Danceability'],
-            fill: 'toself'
-        };
-
-        var data = [trace];
-
-        var layout = {
-            polar: {
-                radialaxis: {
-                    visible: true,
-                    range: [0, 1]
-                }
-            },
-            showlegend: false,
-            title: `${trackData.name} Audio Features`
-        };
-
-        Plotly.newPlot(divId, data, layout);
-    }
-
-    // Inside the Papa.parse complete function, after processing tracks
-    tracks.forEach((track, index) => {
-        // Assume each track's data includes audio features
-        // Generate a radar chart for each track in a specific div
-        // You might need to dynamically create divs for each track or use a predefined set of divs
-        generateRadarChart(track, `divIdForTrack${index}`);
-    });
-
 });
+
+function calculateAverageMetrics(videos, metric) {
+    let total = videos.reduce((acc, video) => acc + parseFloat(video[metric] || 0), 0);
+    return total / videos.length;
+}
+
+function plotOfficialVideoImpact(officialVideos, nonOfficialVideos) {
+    console.log('Official Videos:', officialVideos.length, 'Non-Official Videos:', nonOfficialVideos.length);
+
+    var metrics = ['views', 'likes', 'comments'];
+    var officialMetrics = metrics.map(metric => calculateAverageMetrics(officialVideos, metric));
+    var nonOfficialMetrics = metrics.map(metric => calculateAverageMetrics(nonOfficialVideos, metric));
+
+    console.log('Official Metrics:', officialMetrics);
+    console.log('Non-Official Metrics:', nonOfficialMetrics);
+
+    var barData = [{
+        x: metrics,
+        y: officialMetrics,
+        name: 'Official Videos',
+        type: 'bar'
+    }, {
+        x: metrics,
+        y: nonOfficialMetrics,
+        name: 'Non-official Videos',
+        type: 'bar'
+    }];
+
+    var barLayout = {
+        title: 'Impact of Official Video on Engagement Metrics',
+        barmode: 'group',
+        xaxis: { title: 'Metric' },
+        yaxis: { title: 'Average Value', autorange: true },
+        width: 1300,
+        height: 600
+    };
+
+    Plotly.newPlot('officialVideoImpact', barData, barLayout);
+}
