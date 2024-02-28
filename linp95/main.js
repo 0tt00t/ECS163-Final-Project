@@ -1,0 +1,388 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const fullLyricsText = `Hi everyone, I'm Lay, a very special music creator and a senior majoring in computer science. I have demonstrated exceptional talent not only academically but also as a passionate musician. As an avid music producer, I love sharing my sounds with the world. However, real-life difficulties and challenges can be stressful, especially when trying to stand out on digital music platforms like Spotify and YouTube. Nevertheless, I was not intimidated by these challenges. Instead, I used my expertise in data visualization to find new expressions of music creation. Next, please follow me into the story of my breakthrough in Spotify streams, and YouTube views and likes.
+    `;
+    let currentCharIndex = 0;
+    const lyricsContainer = document.getElementById('lyrics');
+    const playButton = document.getElementById('playButton');
+    const audio = new Audio('music.mp3'); // Replace with the path to your music file
+    let typingInterval;
+
+    const typeChar = () => {
+        if (currentCharIndex < fullLyricsText.length) {
+            lyricsContainer.textContent += fullLyricsText.charAt(currentCharIndex);
+            currentCharIndex++;
+        } else {
+            clearInterval(typingInterval);
+        }
+    };
+
+    playButton.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playButton.textContent = 'Pause Intro';
+            typingInterval = setInterval(typeChar, 65); // The speed of typing, adjust as needed
+        } else {
+            audio.pause();
+            playButton.textContent = 'Play Intro';
+            clearInterval(typingInterval);
+        }
+    });
+    // Assuming you have a variableInfo object with details for each feature
+    const info = {
+        'Loudness': {
+            Definition: 'How loud a song is from start to end.',
+            Range: 'Between -60 dB (quiet) and 0 dB (loud).',
+            Application: 'Keeps song volumes consistent across tracks.'
+        },
+        'Duration_ms': {
+            Definition: 'The length of the track in milliseconds.',
+            Range: 'In milliseconds, varies from short to very long tracks.',
+            Application: 'Useful for making playlists with time - specific needs, like short songs for a quick workout or longer tracks for relaxation.'
+        },
+        'Acousticness': {
+            Definition: 'Indicates how likely a track is made with acoustic (non-electronic) sounds.',
+            Range: '0.0 (not acoustic) to 1.0 (very acoustic).',
+            Application: 'Great for finding natural-sounding music for specific playlists.'
+        },
+        'Tempo': {
+            Definition: 'The speed of a track in beats per minute (BPM).',
+            Range: 'Typically 50 to 150 BPM.',
+            Application: 'Useful for matching songs with similar tempos for a playlist.'
+        },
+        'Valence': {
+            Definition: 'Measures how positive or happy music sounds.',
+            Range: '0.0 (sad or negative) to 1.0 (happy or positive).',
+            Application: 'Used to create playlists that fit a mood, like cheerful or somber.'
+        },
+        'Energy': {
+            Definition: 'A measure of intensity and activity.',
+            Range: 'Ranges from 0.0 to 1.0.',
+            Application: 'Often higher for faster, louder, more energetic tracks.'
+        },
+        'Speechiness': {
+            Definition: 'Determines if a track has more talking than music.',
+            Range: 'Above 0.66 (mostly talk), 0.33 to 0.66 (mix of music and talk), below 0.33 (mostly music).',
+            Application: 'Helps sort music from podcasts or audiobooks.'
+        },
+        'Danceability': {
+            Definition: 'Tells you if a track is good for dancing, considering its rhythm and beat.',
+            Range: '0.0 (hard to dance to) to 1.0 (great for dancing).',
+            Application: 'Useful for making dance playlists or for music at parties.'
+        },
+        'Liveness': {
+            Definition: 'Indicates if a track was recorded live.',
+            Range: '0.0 (studio recording) to 1.0 (live recording).',
+            Application: 'Great for finding live music or avoiding it.'
+        },
+        'Instrumentalness': {
+            Definition: 'Predicts if a track has vocals.',
+            Range: '0.0 (likely has vocals) to 1.0 (likely instrumental).',
+            Application: 'Useful for creating instrumental playlists or background music.'
+        },
+        'Key': {
+            Definition: 'Shows the musical key of a track, affecting its mood and harmony.',
+            Range: 'A, A#, B, C, C#, D, D#, E, F, F#, G, G#.',
+            Application: 'Helps DJs and music enthusiasts mix tracks harmoniously.'
+        }
+    };
+    document.querySelectorAll('.feature-info').forEach(el => {
+        el.addEventListener('mouseenter', e => {
+            const feature = e.target.getAttribute('data-feature');
+            const data = info[feature];
+            const infoBox = document.getElementById('infoBox');
+            infoBox.innerHTML = `<strong>${feature.toUpperCase()}</strong><br><strong>Definition:</strong> ${data.Definition}<br><strong>Range:</strong> ${data.Range}<br><strong>Application:</strong> ${data.Application}`;
+            infoBox.style.display = 'block';
+            infoBox.style.left = `${e.pageX}px`;
+            infoBox.style.top = `${e.pageY}px`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+            document.getElementById('infoBox').style.display = 'none';
+        });
+    });
+
+    fetch('spotify_feature_importances.csv')
+        .then(response => response.text())
+        .then(text => {
+            const rows = text.split('\n').slice(1); // Skip header row
+            let features = [];
+            let importances = [];
+
+            rows.forEach(row => {
+                const columns = row.split(',');
+                features.push(columns[0]);
+                importances.push(parseFloat(columns[1]));
+            });
+
+            const ctx = document.getElementById('spotifyFeaturesRadar').getContext('2d');
+            const spotifyFeaturesRadar = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: features,
+                    datasets: [{
+                        label: 'Feature Importances',
+                        data: importances,
+                        fill: true,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointBackgroundColor: 'rgb(255, 99, 132)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(255, 99, 132)'
+                    }]
+                },
+                options: {
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    animation: {
+                        duration: 2000, // Duration in milliseconds
+                        easing: 'easeInOutBounce', // Easing function to use
+                    },
+                    legend: {
+                        position: 'bottom', // Moves the legend to the bottom
+                    },
+                    scale: {
+                        pointLabels: {
+                            fontSize: 32, // Adjust the font size as needed
+                            fontColor: '#000', // Example font color, adjust as needed
+                            fontStyle: 'bold', // Makes the text bold, optional
+                        }
+                    }
+                }
+            });
+
+        });
+    // heatmap.js content
+    d3.csv("correlation_matrix.csv").then(function (data) {
+        const canvas_width = document.getElementById("heatmap-div").clientWidth;
+        const canvas_height = document.getElementById("heatmap-div").clientHeight;
+        console.log(canvas_width, canvas_height);
+        const margin = { top: 50, right: 100, bottom: 100, left: 100 }, // Adjust right margin for legend
+            width = canvas_width - margin.left - margin.right,
+            height = canvas_height - margin.top - margin.bottom,
+            svgWidth = width + margin.left + margin.right, // SVG total width
+            svgHeight = height + margin.top + margin.bottom; // SVG total height
+
+        const svg = d3.select("#heatmap")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight);
+
+        const heatmapGroup = svg.append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Assuming the first row of the CSV contains the feature names
+        const features = Object.keys(data[0]).slice(1); // Exclude the first column for labels
+
+
+        const xScale = d3.scaleBand()
+            .range([0, width])
+            .domain(features)
+            .padding(0.05);
+
+        const yScale = d3.scaleBand()
+            .range([height, 0])
+            .domain(features)
+            .padding(0.05);
+
+        const colorScale = d3.scaleSequential()
+            .interpolator(d3.interpolateRdBu)
+            .domain([-1, 1]);
+
+        // Convert data into a format suitable for heatmap
+        const heatmapData = [];
+        data.forEach((row, i) => {
+            features.forEach((feature, j) => {
+                heatmapData.push({
+                    x: feature,
+                    y: features[i],
+                    value: +row[feature]
+                });
+            });
+        });
+
+        heatmapGroup.append("g")
+            .selectAll("rect")
+            .data(heatmapData)
+            .enter().append("rect")
+            .attr("x", d => xScale(d.x))
+            .attr("y", d => yScale(d.y))
+            .attr("width", xScale.bandwidth())
+            .attr("height", yScale.bandwidth())
+            .style("fill", d => colorScale(d.value))
+            .style("opacity", 0.8);
+
+        // Add X axis
+        heatmapGroup.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(xScale))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        // Add Y axis
+        heatmapGroup.append("g")
+            .call(d3.axisLeft(yScale));
+
+
+        // Legend setup
+        const legendGroup = svg.append("g")
+            .attr("transform", `translate(${svgWidth - margin.right + 20}, ${margin.top})`);
+
+        var defs = legendGroup.append("defs");
+        var linearGradient = defs.append('linearGradient')
+            .attr('id', 'linear-gradient')
+            .attr("x1", "0%")
+            .attr("y1", "100%") // Gradient goes from bottom to top
+            .attr("x2", "0%")
+            .attr("y2", "0%");
+
+        // Create the stops for the gradient, matching the domain of the colorScale
+        const numStops = 10; // Number of stops for the gradient
+        const stopValues = d3.range(numStops).map(d => d / (numStops - 1));
+        linearGradient.selectAll('stop')
+            .data(stopValues)
+            .enter().append('stop')
+            .attr('offset', d => `${d * 100}%`)
+            .attr('stop-color', d => colorScale(d * 2 - 1));
+
+        // Draw the legend bar
+        legendGroup.append("rect")
+            .attr("width", 20)
+            .attr("height", height)
+            .style("fill", "url(#linear-gradient)");
+
+        // Legend scale and axis
+        var legendScale = d3.scaleLinear().domain([-1, 1]).range([height, 0]);
+        var legendAxis = d3.axisRight(legendScale).ticks(5).tickFormat(d3.format(".2f"));
+
+        legendGroup.append("g")
+            .attr("transform", "translate(20,0)")
+            .call(legendAxis);
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute")
+            .style("text-align", "center")
+            .style("width", "160px")
+            .style("height", "auto")
+            .style("padding", "2px")
+            .style("font", "12px sans-serif")
+            .style("background", "lightsteelblue")
+            .style("border", "0px")
+            .style("border-radius", "8px")
+            .style("pointer-events", "none");
+        heatmapGroup.selectAll("rect")
+            .on("mouseover", function (event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`Value: ${d.value}<br>Row: ${d.y}<br>Column: ${d.x}`)
+                    .style("left", (event.pageX + 10) + "px") // Adjusted for better positioning
+                    .style("top", (event.pageY - 28) + "px");
+            })
+
+            .on("mouseout", function (d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+
+    });
+});
+// Assuming you have an async function to fetch data
+async function fetchData() {
+    const response = await fetch('data1.json');
+    const data = await response.json();
+    return data;
+}
+fetchData().then(data => {
+    // Extract loudness, views, and likes into separate arrays
+    var data_loudness = data.map(item => item.Loudness);
+    var data_views = data.map(item => item.Views);
+    var data_likes = data.map(item => item.Likes);
+
+    // Now, you can use these arrays with Plotly.js as shown in the previous examples
+    var trace = {
+        x: data_loudness,
+        y: data_views,
+        z: data_likes,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_loudness,
+            colorscale: 'Viridis',
+        },
+        type: 'scatter3d'
+    };
+
+    var layout = {
+        title: 'Loudness vs. YouTube Views and Likes',
+        scene: {
+            xaxis: { title: 'Loudness' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'YouTube Likes' },
+            // Set the background of the 3D plot area to transparent
+            bgcolor: 'rgba(0,0,0,0)' // RGBA color format, alpha set to 0 for transparency
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        // Set the overall background color of the plot to transparent
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+    Plotly.newPlot('plotly-div-1', [trace], layout);
+});
+fetchData().then(data => {
+    // Extract energy, views, and likes into separate arrays
+    var data_energy = data.map(item => item.Energy);
+    var data_views = data.map(item => item.Views);
+    var data_likes = data.map(item => item.Likes);
+
+    // Define the trace for the 3D scatter plot
+    var trace = {
+        x: data_energy,
+        y: data_views,
+        z: data_likes,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_energy, // Use energy to color the markers
+            colorscale: 'Viridis',
+        },
+        type: 'scatter3d',
+        name: 'Songs'
+    };
+
+    // Define the layout of the plot
+    var layout = {
+        title: 'Energy vs. YouTube Views and Likes',
+        scene: {
+            xaxis: { title: 'Energy' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'YouTube Likes' },
+            bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Make overall plot background transparent
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+
+    // Create the plot at the plotly-div-2 element
+    Plotly.newPlot('plotly-div-2', [trace], layout);
+});
+
+
