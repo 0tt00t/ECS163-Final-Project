@@ -298,17 +298,20 @@ async function fetchData() {
     const data = await response.json();
     return data;
 }
+// Loudness Plot
 fetchData().then(data => {
     // Extract loudness, views, and likes into separate arrays
     var data_loudness = data.map(item => item.Loudness);
     var data_views = data.map(item => item.Views);
-    var data_likes = data.map(item => item.Likes);
+    var data_stream = data.map(item => item.Stream);
+
+    var data_labels = data.map((item) => `${item.Track}<br>Loudness: ${item.Loudness}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
 
     // Now, you can use these arrays with Plotly.js as shown in the previous examples
     var trace = {
         x: data_loudness,
         y: data_views,
-        z: data_likes,
+        z: data_stream,
         mode: 'markers',
         marker: {
             size: 12,
@@ -316,15 +319,17 @@ fetchData().then(data => {
             color: data_loudness,
             colorscale: 'Viridis',
         },
-        type: 'scatter3d'
+        type: 'scatter3d',
+        text: data_labels, 
+        hoverinfo: 'text' 
     };
 
     var layout = {
-        title: 'Loudness vs. YouTube Views and Likes',
+        title: 'Loudness vs. YouTube Views and Spotify Stream',
         scene: {
             xaxis: { title: 'Loudness' },
             yaxis: { title: 'YouTube Views' },
-            zaxis: { title: 'YouTube Likes' },
+            zaxis: { title: 'Spotify Stream' },
             // Set the background of the 3D plot area to transparent
             bgcolor: 'rgba(0,0,0,0)' // RGBA color format, alpha set to 0 for transparency
         },
@@ -340,17 +345,20 @@ fetchData().then(data => {
     };
     Plotly.newPlot('plotly-div-1', [trace], layout);
 });
+// Energy Plot
 fetchData().then(data => {
     // Extract energy, views, and likes into separate arrays
     var data_energy = data.map(item => item.Energy);
     var data_views = data.map(item => item.Views);
-    var data_likes = data.map(item => item.Likes);
+    var data_stream = data.map(item => item.Stream);
+
+    var data_labels = data.map((item) => `${item.Track}<br>Energy: ${item.Energy}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
 
     // Define the trace for the 3D scatter plot
     var trace = {
         x: data_energy,
         y: data_views,
-        z: data_likes,
+        z: data_stream,
         mode: 'markers',
         marker: {
             size: 12,
@@ -359,16 +367,17 @@ fetchData().then(data => {
             colorscale: 'Viridis',
         },
         type: 'scatter3d',
-        name: 'Songs'
+        text: data_labels, 
+        hoverinfo: 'text' 
     };
 
     // Define the layout of the plot
     var layout = {
-        title: 'Energy vs. YouTube Views and Likes',
+        title: 'Energy vs. YouTube Views and Spotify Stream',
         scene: {
             xaxis: { title: 'Energy' },
             yaxis: { title: 'YouTube Views' },
-            zaxis: { title: 'YouTube Likes' },
+            zaxis: { title: 'Spotify Stream' },
             bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
         },
         margin: {
@@ -384,5 +393,195 @@ fetchData().then(data => {
     // Create the plot at the plotly-div-2 element
     Plotly.newPlot('plotly-div-2', [trace], layout);
 });
+// Valence Plot
+fetchData().then(data => {
+    // Extract valence, views, and likes into separate arrays
+    var data_valence = data.map(item => item.Valence);
+    var data_views = data.map(item => item.Views);
+    var data_stream = data.map(item => item.Stream);
 
+    var data_labels = data.map((item) => `${item.Track}<br>Valence: ${item.Valence}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
 
+    // Define the trace for the 3D scatter plot
+    var trace = {
+        x: data_valence,
+        y: data_views,
+        z: data_stream,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_valence, // Use valence to color the markers
+            colorscale: 'RdBu',
+        },
+        type: 'scatter3d',
+        text: data_labels, 
+        hoverinfo: 'text' 
+    };
+
+    // Define the layout of the plot
+    var layout = {
+        title: 'Valence vs. YouTube Views and Spotify Stream',
+        scene: {
+            xaxis: { title: 'Valence' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'Spotify Stream' },
+            bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Make overall plot background transparent
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+
+    // Create the plot at the plotly-div-3 element
+    Plotly.newPlot('plotly-div-3', [trace], layout);
+});
+// Dancebility Plot
+fetchData().then(data => {
+    // Extract danceability, views, and likes into separate arrays
+    var data_danceability = data.map(item => item.Danceability);
+    var data_views = data.map(item => item.Views);
+    var data_stream = data.map(item => item.Stream);
+
+    var data_labels = data.map((item) => `${item.Track}<br>Danceability: ${item.Danceability}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
+
+    // Define the trace for the 3D scatter plot
+    var trace = {
+        x: data_danceability,
+        y: data_views,
+        z: data_stream,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_danceability, // Use danceability to color the markers
+            colorscale: 'RdBu',
+        },
+        type: 'scatter3d',
+        text: data_labels, 
+        hoverinfo: 'text' 
+    };
+
+    // Define the layout of the plot
+    var layout = {
+        title: 'Danceability vs. YouTube Views and Spotify Stream',
+        scene: {
+            xaxis: { title: 'Danceability' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'Spotify Stream' },
+            bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Make overall plot background transparent
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+
+    // Create the plot at the plotly-div-4 element
+    Plotly.newPlot('plotly-div-4', [trace], layout);
+});
+// Tempo Plot
+fetchData().then(data => {
+    // Extract tempo, views, and stream into separate arrays
+    var data_tempo = data.map(item => item.Tempo);
+    var data_views = data.map(item => item.Views);
+    var data_stream = data.map(item => item.Stream);
+
+    var data_labels = data.map((item) => `${item.Track}<br>Tempo: ${item.Tempo}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
+
+    // Define the trace for the 3D scatter plot
+    var trace = {
+        x: data_tempo,
+        y: data_views,
+        z: data_stream,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_tempo, // Use tempo to color the markers
+            colorscale: 'Jet',
+        },
+        type: 'scatter3d',
+        text: data_labels, 
+        hoverinfo: 'text' 
+    };
+
+    // Define the layout of the plot
+    var layout = {
+        title: 'Tempo vs. YouTube Views and Spotify Stream',
+        scene: {
+            xaxis: { title: 'Tempo' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'Spotify Stream' },
+            bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Make overall plot background transparent
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+
+    // Create the plot at the plotly-div-5 element
+    Plotly.newPlot('plotly-div-5', [trace], layout);
+});
+// Acousticness Plot
+fetchData().then(data => {
+    // Extract acousticness, views, and stream into separate arrays
+    var data_acousticness = data.map(item => item.Acousticness);
+    var data_views = data.map(item => item.Views);
+    var data_stream = data.map(item => item.Stream);
+
+    var data_labels = data.map((item) => `${item.Track}<br>Accousticness: ${item.Acousticness}<br>Views: ${item.Views}<br>Stream: ${item.Stream}`);
+
+    // Define the trace for the 3D scatter plot
+    var trace = {
+        x: data_acousticness,
+        y: data_views,
+        z: data_stream,
+        mode: 'markers',
+        marker: {
+            size: 12,
+            opacity: 0.8,
+            color: data_acousticness, // Use acousticness to color the markers
+            colorscale: 'Jet',
+        },
+        type: 'scatter3d',
+        text: data_labels, 
+        hoverinfo: 'text' 
+    };
+
+    // Define the layout of the plot
+    var layout = {
+        title: 'Acousticness vs. YouTube Views and Spotify Stream',
+        scene: {
+            xaxis: { title: 'Acousticness' },
+            yaxis: { title: 'YouTube Views' },
+            zaxis: { title: 'Spotify Stream' },
+            bgcolor: 'rgba(0,0,0,0)' // Make plot background transparent
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)', // Make overall plot background transparent
+        plot_bgcolor: 'rgba(0,0,0,0)',
+    };
+
+    // Create the plot at the plotly-div-6 element
+    Plotly.newPlot('plotly-div-6', [trace], layout);
+});
