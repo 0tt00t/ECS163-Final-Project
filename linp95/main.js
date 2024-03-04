@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const fullLyricsText = `Hi everyone, I'm Lay, a very special music creator and a senior majoring in computer science. I have demonstrated exceptional talent not only academically but also as a passionate musician. As an avid music producer, I love sharing my sounds with the world. However, real-life difficulties and challenges can be stressful, especially when trying to stand out on digital music platforms like Spotify and YouTube. Nevertheless, I was not intimidated by these challenges. Instead, I used my expertise in data visualization to find new expressions of music creation. Next, please follow me into the story of my breakthrough in Spotify streams, and YouTube views and likes.
     `;
     let currentCharIndex = 0;
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
     // heatmap.js content
-    d3.csv("correlation_matrix.csv").then(function (data) {
+    d3.csv("correlation_matrix.csv").then(function(data) {
         const canvas_width = document.getElementById("heatmap-div").clientWidth;
         const canvas_height = document.getElementById("heatmap-div").clientHeight;
         console.log(canvas_width, canvas_height);
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .style("border-radius", "8px")
             .style("pointer-events", "none");
         heatmapGroup.selectAll("rect")
-            .on("mouseover", function (event, d) {
+            .on("mouseover", function(event, d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     .style("top", (event.pageY - 28) + "px");
             })
 
-            .on("mouseout", function (d) {
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            });
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
     });
 });
@@ -320,8 +320,8 @@ fetchData().then(data => {
             colorscale: 'Viridis',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     var layout = {
@@ -367,8 +367,8 @@ fetchData().then(data => {
             colorscale: 'Viridis',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     // Define the layout of the plot
@@ -415,8 +415,8 @@ fetchData().then(data => {
             colorscale: 'RdBu',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     // Define the layout of the plot
@@ -463,8 +463,8 @@ fetchData().then(data => {
             colorscale: 'RdBu',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     // Define the layout of the plot
@@ -511,8 +511,8 @@ fetchData().then(data => {
             colorscale: 'Jet',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     // Define the layout of the plot
@@ -559,8 +559,8 @@ fetchData().then(data => {
             colorscale: 'Jet',
         },
         type: 'scatter3d',
-        text: data_labels, 
-        hoverinfo: 'text' 
+        text: data_labels,
+        hoverinfo: 'text'
     };
 
     // Define the layout of the plot
@@ -584,4 +584,63 @@ fetchData().then(data => {
 
     // Create the plot at the plotly-div-6 element
     Plotly.newPlot('plotly-div-6', [trace], layout);
+});
+
+// boxplots.js
+async function generateBoxPlot(category, elementId) {
+    const data = await d3.csv("Spotify_Youtube.csv");
+
+    const values = data.map(row => parseFloat(row[category]));
+
+    const trace = {
+        y: values,
+        type: 'box',
+        name: category,
+        boxpoints: 'all',
+        jitter: 0.5,
+        whiskerwidth: 0.2,
+        marker: {
+            size: 2
+        },
+        boxpoints: false,
+        line: {
+            width: 1
+        }
+    };
+
+    const layout = {
+        title: `${category} Box Plot`,
+        yaxis: {
+            autorange: true,
+            showgrid: true,
+            zeroline: true,
+            gridcolor: 'transparent',
+            gridwidth: 1,
+            zerolinecolor: '#969696',
+            zerolinewidth: 2,
+        },
+        margin: {
+            l: 40,
+            r: 30,
+            b: 80,
+            t: 100,
+        },
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        showlegend: false
+    };
+
+    Plotly.newPlot(elementId, [trace], layout);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const categories = ['Danceability', 'Energy', 'Key', 'Loudness', 'Speechiness',
+        'Acousticness', 'Instrumentalness', 'Liveness', 'Valence',
+        'Tempo', 'Duration_ms'
+    ];
+
+    categories.forEach((category, index) => {
+        const elementId = `boxPlot${index}`;
+        generateBoxPlot(category, elementId);
+    });
 });

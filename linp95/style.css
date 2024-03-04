@@ -92,7 +92,9 @@ html {
     scroll-behavior: smooth;
 }
 
+
 /* Section styling */
+
 .section {
     font-family: 'Comic Sans MS', 'Comic Neue', cursive;
     color: #333;
@@ -126,8 +128,6 @@ html {
     line-height: 1.4;
 }
 
-
-
 #comic-strip {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -160,7 +160,27 @@ html {
     /* Adjust as needed */
 }
 
+.panel-large.col {
+    display: flex;
+    flex-direction: row;
+    /* Align children in a row */
+    justify-content: space-around;
+    /* Distribute space around the elements */
+    align-items: center;
+    /* Align items vertically in the center */
+    height: 600px;
+    /* Adjust height as needed */
+}
+
+.box-plot {
+    width: 40%;
+    /* Adjust width as needed for each plot */
+    /* No height style needed here if .panel-large.col has a fixed height */
+}
+
+
 /* Add a pseudo-element to the first large panel to hold the background image */
+
 #col1-img {
     content: "";
     width: 150%;
@@ -168,7 +188,9 @@ html {
     background: ("001.jpg") no-repeat center center;
 }
 
+
 /* Make sure the panel's position is relative so the pseudo-element is positioned in relation to it */
+
 .panel-large:first-child {
     position: relative;
     overflow: hidden;
