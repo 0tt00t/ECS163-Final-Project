@@ -1,0 +1,303 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #f7f0ed;
+    text-align: center;
+}
+
+#header {
+    margin-bottom: 20px;
+}
+
+#title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 56px;
+    /* Adjust size as needed */
+    margin-bottom: 10px;
+    /* Apply creative styling */
+    color: #e74c3c;
+    font-weight: bold;
+    /* Example color */
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    /* Adjust spacing as needed */
+}
+
+#authors {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    /* Adjust size as needed */
+    color: #5f5e5e;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-weight: bold;
+    /* Lighter font */
+    letter-spacing: 2px;
+    /* Adjust spacing as needed */
+}
+
+#lyrics-container {
+    position: relative;
+    background-color: #fffefe;
+    padding: 5px;
+    border-radius: 60px;
+    box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 80%;
+    margin: 0 auto;
+    white-space: pre-wrap;
+    font-size: 24px;
+    line-height: 1.5;
+}
+
+#playButton {
+    font-size: 14px;
+    padding: 8px 16px;
+    cursor: pointer;
+    position: absolute;
+    top: -40px;
+    left: 10px;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#video-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Section styling */
+
+.section {
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+    color: #333;
+    /* Dark grey color for the text */
+    line-height: 1.6;
+    /* Spacing between lines for readability */
+    padding: 10px;
+    /* Padding around the text */
+    margin: 2px 0;
+    /* Margin around each section for separation */
+}
+
+.section h1 {
+    color: #000;
+    font-size: 28px;
+    /* Black color for headers */
+}
+
+.section p {
+    font-size: 25px;
+    background-color: #f7f0ed;
+    /* Light grey background */
+    padding: 2px;
+    margin: 10px 0;
+    /* Adds space outside the text box, above and below */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+    /* Optional: Adds a subtle shadow for depth */
+    border-radius: 3px;
+    width: 1000px;
+    height: fit-content;
+    line-height: 1.4;
+}
+
+#comic-strip {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 10px;
+    padding: 2px;
+    background-color: transparent;
+    /* use the browser width as the div width*/
+    width: 80%;
+    height: auto;
+}
+
+.panel {
+    border: 2px solid #282828;
+    margin: 6px;
+    position: relative;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+    ;
+    /* For positioning content within each panel */
+}
+
+.panel-large {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Full width */
+    min-width: 1000px;
+    min-height: 700px;
+    flex-direction: column;
+    /* Adjust as needed */
+}
+
+.panel-large.col {
+    display: flex;
+    flex-direction: row;
+    /* Align children in a row */
+    justify-content: space-around;
+    /* Distribute space around the elements */
+    align-items: center;
+    /* Align items vertically in the center */
+    height: 600px;
+    /* Adjust height as needed */
+}
+
+.box-plot {
+    width: 40%;
+    /* Adjust width as needed for each plot */
+    /* No height style needed here if .panel-large.col has a fixed height */
+}
+
+
+/* Add a pseudo-element to the first large panel to hold the background image */
+
+#col1-img {
+    content: "";
+    width: 150%;
+    height: 100%;
+    background: ("001.jpg") no-repeat center center;
+}
+
+
+/* Make sure the panel's position is relative so the pseudo-element is positioned in relation to it */
+
+.panel-large:first-child {
+    position: relative;
+    overflow: hidden;
+    /* This ensures the image doesn't flow outside the panel */
+}
+
+.feature-info {
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+    line-height: 1.6;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+}
+
+.panel-pic {
+    grid-column: span 6;
+    /* Half width */
+    height: 512px;
+    min-width: 512px;
+    /* Adjust as needed */
+}
+
+.panel-small {
+    grid-column: span 6;
+    /* Half width */
+    height: 600px;
+    min-width: 600px;
+    /* Adjust as needed */
+}
+
+#plotly-div {
+    width: 80%;
+    /* Adjust based on your preference */
+    height: 80vh;
+    background-color: transparent;
+    /* Adjust based on your preference */
+}
+
+.panel-medium {
+    grid-column: span 6;
+    /* Half width */
+    height: 500px;
+    min-width: 500px;
+    /* Adjust as needed */
+}
+
+#infoBox {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 100;
+    width: auto;
+    max-width: 300px;
+    display: none;
+    /* Hidden by default */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.spotifyFeaturesRadarDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    max-height: fit-content;
+    min-width: 500px;
+}
+
+#spotifyFeaturesRadar {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    max-height: 650px;
+}
+
+.spotifyHeatMapDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    max-height: fit-content;
+    min-width: 500px;
+}
+
+.heatmap rect {
+    stroke-width: 2;
+    stroke: #fff;
+}
+
+#heatmap-div {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 650px;
+    max-width: 800px;
+}
+
+.axis text {
+    font-size: 12px;
+}
+
+.axis line,
+.axis path {
+    fill: none;
+    stroke: #000;
+}
