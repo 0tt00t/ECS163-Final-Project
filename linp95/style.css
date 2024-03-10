@@ -113,6 +113,12 @@ html {
     /* Black color for headers */
 }
 
+.section h2 {
+    color: #000;
+    font-size: 36px;
+    /* Black color for headers */
+}
+
 .section p {
     font-size: 25px;
     background-color: #f7f0ed;
@@ -214,6 +220,22 @@ html {
     /* Half width */
     height: 512px;
     min-width: 512px;
+    /* Adjust as needed */
+}
+
+.panel-pic_data {
+    grid-column: span 6;
+    /* Half width */
+    height: 696px;
+    min-width: 400px;
+    /* Adjust as needed */
+}
+
+.panel-pic_data_short {
+    grid-column: span 6;
+    /* Half width */
+    height: 600px;
+    min-width: 320px;
     /* Adjust as needed */
 }
 
