@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const fullLyricsText = `Hi everyone, I'm Lay, a very special music creator and a senior majoring in computer science. I have demonstrated exceptional talent not only academically but also as a passionate musician. As an avid music producer, I love sharing my sounds with the world. However, real-life difficulties and challenges can be stressful, especially when trying to stand out on digital music platforms like Spotify and YouTube. Nevertheless, I was not intimidated by these challenges. Instead, I used my expertise in data visualization to find new expressions of music creation. Next, please follow me into the story of my breakthrough in Spotify streams, and YouTube views and likes.
     `;
     let currentCharIndex = 0;
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     // heatmap.js content
-    d3.csv("correlation_matrix.csv").then(function(data) {
+    d3.csv("correlation_matrix.csv").then(function (data) {
         const canvas_width = document.getElementById("heatmap-div").clientWidth;
         const canvas_height = document.getElementById("heatmap-div").clientHeight;
         console.log(canvas_width, canvas_height);
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .style("border-radius", "8px")
             .style("pointer-events", "none");
         heatmapGroup.selectAll("rect")
-            .on("mouseover", function(event, d) {
+            .on("mouseover", function (event, d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     .style("top", (event.pageY - 28) + "px");
             })
 
-        .on("mouseout", function(d) {
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+            .on("mouseout", function (d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
 
     });
 });
@@ -644,3 +644,41 @@ document.addEventListener('DOMContentLoaded', () => {
         generateBoxPlot(category, elementId);
     });
 });
+
+function playVideo(element) {
+    // Hide the thumbnail
+    var img = element.querySelector("img");
+    img.style.display = "none";
+
+    // Show the iframe
+    var iframe = element.querySelector("iframe");
+    iframe.style.display = "block";
+
+    // Check if the src URL already has a query string
+    if (iframe.src.indexOf('?') === -1) {
+        // If not, add "?autoplay=1"
+        iframe.src += "?autoplay=1";
+    } else {
+        // If the URL already has a query string, add "&autoplay=1"
+        iframe.src += "&autoplay=1";
+    }
+}
+// Function to minimize the menu bar
+function toggleMenuBar() {
+    var menuBar = document.getElementById("corner-menu-bar");
+    var minimizeButton = document.getElementById("minimize-button");
+    var returnButton = document.getElementById("return-button");
+
+    // Check the current state of the menu bar to toggle between minimize and return
+    if (menuBar.style.display !== "none") {
+        // Minimize the menu bar
+        menuBar.style.display = "none";
+        minimizeButton.style.display = "none";
+        returnButton.style.display = "block";
+    } else {
+        // Return (maximize) the menu bar
+        menuBar.style.display = "block";
+        minimizeButton.style.display = "block";
+        returnButton.style.display = "none";
+    }
+}

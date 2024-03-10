@@ -323,3 +323,108 @@ html {
     fill: none;
     stroke: #000;
 }
+
+.video-container {
+    position: relative;
+    width: 320px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.video-thumbnail {
+    position: relative;
+    /* Parent relative to the absolutely positioned image */
+    width: 320px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.video-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 100px;
+    /* Add space between rows */
+}
+
+.video-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    /* Same as iframe */
+    height: 200px;
+
+}
+
+.video-thumbnail iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    /* Same as iframe */
+    height: 200px;
+    /* Same as iframe */
+    display: none;
+}
+
+#info-box {
+    display: on;
+    /* other styles for your info box */
+    bottom: 100px;
+    /* Change as needed */
+    right: 0;
+    width: 250px;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    ;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    /* or 'fixed' if you want it to stay in place on scroll */
+    z-index: 100;
+    /* Make sure this is high enough to float above other elements */
+    pointer-events: none;
+}
+
+#corner-menu-bar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 0.8em;
+    z-index: 100;
+    transform: scale(0.80);
+    /* Scale down to 75% of the original size */
+    transform-origin: bottom right;
+    /* Sets the origin for the scaling transformation */
+}
+
+#corner-menu-bar ul {
+    list-style: none;
+    /* Remove default list styling */
+    margin: 0;
+    padding: 0;
+}
+
+#corner-menu-bar li {
+    font-size: 1em;
+    padding: 0.5em;
+    /* Padding for list items */
+    border-bottom: 1px solid #ccc;
+    /* Border between items */
+}
+
+#corner-menu-bar li:last-child {
+    border-bottom: none;
+    /* No border for the last item */
+}
+
+#menu-bar li {
+    /* styles for menu items */
+    cursor: pointer;
+}
+
+`
