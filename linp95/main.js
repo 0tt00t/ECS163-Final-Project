@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const fullLyricsText = `Hi everyone, I'm Lay, a very special music creator and a senior majoring in computer science. I have demonstrated exceptional talent not only academically but also as a passionate musician. As an avid music producer, I love sharing my sounds with the world. However, real-life difficulties and challenges can be stressful, especially when trying to stand out on digital music platforms like Spotify and YouTube. Nevertheless, I was not intimidated by these challenges. Instead, I used my expertise in data visualization to find new expressions of music creation. Next, please follow me into the story of my breakthrough in Spotify streams, and YouTube views and likes.
     `;
     let currentCharIndex = 0;
@@ -28,63 +28,63 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     // Assuming you have a variableInfo object with details for each feature
-    const info = {
-        'Loudness': {
-            Definition: 'How loud a song is from start to end.',
-            Range: 'Between -60 dB (quiet) and 0 dB (loud).',
-            Application: 'Keeps song volumes consistent across tracks.'
-        },
-        'Duration_ms': {
-            Definition: 'The length of the track in milliseconds.',
-            Range: 'In milliseconds, varies from short to very long tracks.',
-            Application: 'Useful for making playlists with time - specific needs, like short songs for a quick workout or longer tracks for relaxation.'
-        },
-        'Acousticness': {
-            Definition: 'Indicates how likely a track is made with acoustic (non-electronic) sounds.',
-            Range: '0.0 (not acoustic) to 1.0 (very acoustic).',
-            Application: 'Great for finding natural-sounding music for specific playlists.'
-        },
-        'Tempo': {
-            Definition: 'The speed of a track in beats per minute (BPM).',
-            Range: 'Typically 50 to 150 BPM.',
-            Application: 'Useful for matching songs with similar tempos for a playlist.'
-        },
-        'Valence': {
-            Definition: 'Measures how positive or happy music sounds.',
-            Range: '0.0 (sad or negative) to 1.0 (happy or positive).',
-            Application: 'Used to create playlists that fit a mood, like cheerful or somber.'
-        },
-        'Energy': {
-            Definition: 'A measure of intensity and activity.',
-            Range: 'Ranges from 0.0 to 1.0.',
-            Application: 'Often higher for faster, louder, more energetic tracks.'
-        },
-        'Speechiness': {
-            Definition: 'Determines if a track has more talking than music.',
-            Range: 'Above 0.66 (mostly talk), 0.33 to 0.66 (mix of music and talk), below 0.33 (mostly music).',
-            Application: 'Helps sort music from podcasts or audiobooks.'
-        },
-        'Danceability': {
-            Definition: 'Tells you if a track is good for dancing, considering its rhythm and beat.',
-            Range: '0.0 (hard to dance to) to 1.0 (great for dancing).',
-            Application: 'Useful for making dance playlists or for music at parties.'
-        },
-        'Liveness': {
-            Definition: 'Indicates if a track was recorded live.',
-            Range: '0.0 (studio recording) to 1.0 (live recording).',
-            Application: 'Great for finding live music or avoiding it.'
-        },
-        'Instrumentalness': {
-            Definition: 'Predicts if a track has vocals.',
-            Range: '0.0 (likely has vocals) to 1.0 (likely instrumental).',
-            Application: 'Useful for creating instrumental playlists or background music.'
-        },
-        'Key': {
-            Definition: 'Shows the musical key of a track, affecting its mood and harmony.',
-            Range: 'A, A#, B, C, C#, D, D#, E, F, F#, G, G#.',
-            Application: 'Helps DJs and music enthusiasts mix tracks harmoniously.'
-        }
-    };
+    // const info = {
+    //     'Loudness': {
+    //         Definition: 'How loud a song is from start to end.',
+    //         Range: 'Between -60 dB (quiet) and 0 dB (loud).',
+    //         Application: 'Keeps song volumes consistent across tracks.'
+    //     },
+    //     'Duration_ms': {
+    //         Definition: 'The length of the track in milliseconds.',
+    //         Range: 'In milliseconds, varies from short to very long tracks.',
+    //         Application: 'Useful for making playlists with time - specific needs, like short songs for a quick workout or longer tracks for relaxation.'
+    //     },
+    //     'Acousticness': {
+    //         Definition: 'Indicates how likely a track is made with acoustic (non-electronic) sounds.',
+    //         Range: '0.0 (not acoustic) to 1.0 (very acoustic).',
+    //         Application: 'Great for finding natural-sounding music for specific playlists.'
+    //     },
+    //     'Tempo': {
+    //         Definition: 'The speed of a track in beats per minute (BPM).',
+    //         Range: 'Typically 50 to 150 BPM.',
+    //         Application: 'Useful for matching songs with similar tempos for a playlist.'
+    //     },
+    //     'Valence': {
+    //         Definition: 'Measures how positive or happy music sounds.',
+    //         Range: '0.0 (sad or negative) to 1.0 (happy or positive).',
+    //         Application: 'Used to create playlists that fit a mood, like cheerful or somber.'
+    //     },
+    //     'Energy': {
+    //         Definition: 'A measure of intensity and activity.',
+    //         Range: 'Ranges from 0.0 to 1.0.',
+    //         Application: 'Often higher for faster, louder, more energetic tracks.'
+    //     },
+    //     'Speechiness': {
+    //         Definition: 'Determines if a track has more talking than music.',
+    //         Range: 'Above 0.66 (mostly talk), 0.33 to 0.66 (mix of music and talk), below 0.33 (mostly music).',
+    //         Application: 'Helps sort music from podcasts or audiobooks.'
+    //     },
+    //     'Danceability': {
+    //         Definition: 'Tells you if a track is good for dancing, considering its rhythm and beat.',
+    //         Range: '0.0 (hard to dance to) to 1.0 (great for dancing).',
+    //         Application: 'Useful for making dance playlists or for music at parties.'
+    //     },
+    //     'Liveness': {
+    //         Definition: 'Indicates if a track was recorded live.',
+    //         Range: '0.0 (studio recording) to 1.0 (live recording).',
+    //         Application: 'Great for finding live music or avoiding it.'
+    //     },
+    //     'Instrumentalness': {
+    //         Definition: 'Predicts if a track has vocals.',
+    //         Range: '0.0 (likely has vocals) to 1.0 (likely instrumental).',
+    //         Application: 'Useful for creating instrumental playlists or background music.'
+    //     },
+    //     'Key': {
+    //         Definition: 'Shows the musical key of a track, affecting its mood and harmony.',
+    //         Range: 'A, A#, B, C, C#, D, D#, E, F, F#, G, G#.',
+    //         Application: 'Helps DJs and music enthusiasts mix tracks harmoniously.'
+    //     }
+    // };
     document.querySelectorAll('.feature-info').forEach(el => {
         el.addEventListener('mouseenter', e => {
             const feature = e.target.getAttribute('data-feature');
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
     // heatmap.js content
-    d3.csv("correlation_matrix.csv").then(function (data) {
+    d3.csv("correlation_matrix.csv").then(function(data) {
         const canvas_width = document.getElementById("heatmap-div").clientWidth;
         const canvas_height = document.getElementById("heatmap-div").clientHeight;
         console.log(canvas_width, canvas_height);
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .style("border-radius", "8px")
             .style("pointer-events", "none");
         heatmapGroup.selectAll("rect")
-            .on("mouseover", function (event, d) {
+            .on("mouseover", function(event, d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     .style("top", (event.pageY - 28) + "px");
             })
 
-            .on("mouseout", function (d) {
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            });
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
     });
 });
