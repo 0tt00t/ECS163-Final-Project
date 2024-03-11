@@ -4,7 +4,10 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: #f7f0ed;
+    background-image: url("background.png");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
     text-align: center;
 }
 
@@ -121,7 +124,7 @@ html {
 
 .section p {
     font-size: 25px;
-    background-color: #f7f0ed;
+    background-color: transparent;
     /* Light grey background */
     padding: 2px;
     margin: 10px 0;
@@ -355,7 +358,6 @@ html {
     width: 320px;
     /* Same as iframe */
     height: 200px;
-
 }
 
 .video-thumbnail iframe {
@@ -426,5 +428,3 @@ html {
     /* styles for menu items */
     cursor: pointer;
 }
-
-`
