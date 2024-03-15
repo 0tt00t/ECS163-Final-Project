@@ -28,7 +28,7 @@ Welcome to the ECS163-Final-Project! This project is a data visualization endeav
 
 Before running the project, make sure you have the following prerequisites installed:
 
-- [Node.js](https://nodejs.org/)
+- Visual Studio Code
 - A modern web browser (e.g., Chrome, Firefox, Safari)
 
 To set up the project on your local machine, follow these steps:
@@ -58,4 +58,4 @@ To get the visualization up and running quickly, follow these steps:
 Feel free to explore the data and source code to get a better understanding of how the visualizations are implemented.
 
 ---
-Thank you for checking out the ECS163-Final-Project!
+Thank you for checking out the Team6 ECS163-Final-Project!
