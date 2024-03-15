@@ -428,3 +428,47 @@ html {
     /* styles for menu items */
     cursor: pointer;
 }
+
+.sub-menu1 {
+    display: none; 
+    position: relative; 
+    list-style-type: none; 
+    margin-top: 20px; 
+}
+
+.feature-info:hover .sub-menu1 {
+    display: block; 
+}
+
+.sub-menu1 li a {
+    display: block;
+    color: black; 
+    text-decoration: none; 
+    padding: 5px; 
+}
+
+.sub-menu1 li a:hover {
+    background-color: #f0f0f0; 
+}
+
+.sub-menu2 {
+    display: none; 
+    position: relative; 
+    list-style-type: none; 
+    margin-top: 20px; 
+}
+
+.feature-info:hover .sub-menu2 {
+    display: block; 
+}
+
+.sub-menu2 li a {
+    display: block;
+    color: black; 
+    text-decoration: none; 
+    padding: 5px; 
+}
+
+.sub-menu2 li a:hover {
+    background-color: #f0f0f0; 
+}
